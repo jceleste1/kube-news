@@ -3,7 +3,7 @@ pipeline{
 
 	stages {
         stage('Build Dokcer Image') {
-             staps{
+             steps{
                 script { 
                     dockerapp = docker.build("jceleste/kube-news:v1", '-f ./src/Dockerfile ./src')
                 }
