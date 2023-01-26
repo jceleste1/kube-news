@@ -9,7 +9,6 @@ pipeline{
                 }
             }
         }
-   
 
         stage {
             steps{
@@ -20,5 +19,5 @@ pipeline{
                 }
             }
         } 
-    } 
+    }
 }
