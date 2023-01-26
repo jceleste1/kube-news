@@ -11,7 +11,7 @@ pipeline{
         }
     } 
 
-    stages {
+    stage {
          steps{
             script { 
                 dockerapp = docker.withRegistry("https://registry.hub.docker.com", 'dockerhub')
