@@ -18,7 +18,7 @@ pipeline{
               //       dockerapp.push("jceleste/kube-news:${env.BUILD_ID}")
               // }
 
-               docker.withRegistry('https://registry.hub.docker.com') {
+               dockerapp.withRegistry('https://registry.hub.docker.com') {
                         docker.image('jceleste/kube-news:${env.BUILD_ID}').inside {
                             sh 'make test'
                         }
