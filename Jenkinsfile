@@ -1,13 +1,11 @@
 pipeline{
     agent any
 
-     def app
-
 	stages {
         stage('Build Docker Image') {
              steps{
                 script { 
-                    app = docker.build("jceleste/kube-news:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
+                    dockerapp = docker.build("jceleste/kube-news:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
                 }
             }
         }
@@ -15,9 +13,9 @@ pipeline{
          stage('Push Docker Image') {
             steps{
                 script { 
-                     app.withRegistry('https://registry.hub.docker.com', 'docker')
-                    app.push('lastest')
-                    app.push("${env.BUILD_ID}")
+                    dockerapp = docker.withRegistry('https://registry.hub.docker.com', 'docker')
+                    dockerapp.push("lastest")
+                    dockerapp.push("${env.BUILD_ID}")
                 }
             }
         } 
