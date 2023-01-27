@@ -12,17 +12,14 @@ pipeline{
 
          stage('Push Docker Image') {
             steps{
-              // script { 
-              //      dockerapp = docker.withRegistry('https://registry.hub.docker.com', 'docker')
-              //       dockerapp.push('jceleste/kube-news:lastest')
-              //       dockerapp.push("jceleste/kube-news:${env.BUILD_ID}")
-              // }
+             //  script { 
+                    dockerapp = docker.withRegistry('https://registry.hub.docker.com', 'docker')  {
+                        dockerapp.push('jceleste/kube-news:lastest')
+                        dockerapp.push("jceleste/kube-news:${env.BUILD_ID}")
+                    }
+             //  }
 
-               dockerapp.withRegistry('https://registry.hub.docker.com') {
-                        docker.image('jceleste/kube-news:${env.BUILD_ID}').inside {
-                            sh 'make test'
-                        }
-                }
+
 
 
 
