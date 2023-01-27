@@ -1,42 +1,40 @@
-pipeline{
+pipeline {
     agent any
 
-     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker')
-    }
+    stages {
 
-
-	stages {
-        stage('Build Docker Image') {
-             steps{
-                script { 
+        stage ('Build Docker Image') { 
+            steps {
+                script {
                     dockerapp = docker.build("jceleste/kube-news:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
                 }
             }
         }
 
-         stage('Push Docker Image') {
-            steps{
-                script { 
-                    dockerapp = docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS)
-                    dockerapp.push('lastest')
-                    dockerapp.push("${env.BUILD_ID}")
+        stage ('Push Docker Image'){
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com','docker'){
+                        dockerapp.push('latest')
+                        dockerapp.push("${env.BUILD_ID}")
+                    }
                 }
             }
-        } 
+        }
 
 
-      
 
-        stage('Deploy Kubernetes') {
-            steps{
-               withKuberConfig([credentialsId: 'kubeconfig']){
-                  sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deployment.yaml'
-                  sh 'kubectl apply -f ./k8s/deployment.yaml'
-               }
+        stage ('Deploy Kubernets'){
+            environment {
+                tag_version = "${env.BUILD_ID}"
             }
-        } 
-
-
+            steps{
+                withKubeConfig([credentialsId: 'kubeconfig']){
+                    sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deployment.yaml'
+                    sh 'kubectl apply -f ./k8s/deployment.yaml'
+                }
+            }
+        }
     }
+
 }
