@@ -1,6 +1,11 @@
 pipeline{
     agent any
 
+     environment {
+        DOCKERHUB_CREDENTIALS = credentials('docker')
+    }
+
+
 	stages {
         stage('Build Docker Image') {
              steps{
@@ -12,18 +17,11 @@ pipeline{
 
          stage('Push Docker Image') {
             steps{
-              
-
-
-               script {
-                    docker.withRegistry('https://registry.hub.docker.com/', 'docker') {
-                    dockerapp.push('latest')
+                script { 
+                    dockerapp = docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS)
+                    dockerapp.push('lastest')
                     dockerapp.push("${env.BUILD_ID}")
                 }
-
-
-
-
             }
         } 
 
