@@ -35,6 +35,22 @@ pipeline {
                 }
             }
         }
+
+        stage ('Deploy Grafana'){
+            environment {
+                tag_version = "${env.BUILD_ID}"
+            }
+            steps{
+                withKubeConfig([credentialsId: 'kubeconfig']){
+                    sh 'sed -i "s/{{TAG}}/$tag_version/g" ./monitoramento/deploy-prometheus-grafana-yaml'
+                    sh 'kubectl apply -f ./monitoramento/deploy-prometheus-grafana-yaml'
+                }
+            }
+        }
+
+
+
+
     }
 
 }
