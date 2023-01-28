@@ -1,3 +1,4 @@
+
 #                                      #
 #                                      #
 #                                      #
@@ -10,7 +11,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  labels:
+  labels:    
     helm.sh/chart: kube-state-metrics-4.13.0
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: metrics
@@ -20,7 +21,8 @@ metadata:
     app.kubernetes.io/version: "2.5.0"
   name: prometheus-kube-state-metrics
   namespace: default
-imagePullSecrets: []
+imagePullSecrets:
+  []
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -33,7 +35,8 @@ metadata:
     heritage: Helm
   name: prometheus-node-exporter
   namespace: default
-  annotations: {}
+  annotations:
+    {}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -46,7 +49,8 @@ metadata:
     heritage: Helm
   name: prometheus-server
   namespace: default
-  annotations: {}
+  annotations:
+    {}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -361,7 +365,7 @@ data:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  labels:
+  labels:    
     helm.sh/chart: kube-state-metrics-4.13.0
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: metrics
@@ -371,140 +375,141 @@ metadata:
     app.kubernetes.io/version: "2.5.0"
   name: prometheus-kube-state-metrics
 rules:
-  - apiGroups: ["certificates.k8s.io"]
-    resources:
-      - certificatesigningrequests
-    verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - configmaps
-    verbs: ["list", "watch"]
+- apiGroups: ["certificates.k8s.io"]
+  resources:
+  - certificatesigningrequests
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["batch"]
-    resources:
-      - cronjobs
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - configmaps
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["extensions", "apps"]
-    resources:
-      - daemonsets
-    verbs: ["list", "watch"]
+- apiGroups: ["batch"]
+  resources:
+  - cronjobs
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["extensions", "apps"]
-    resources:
-      - deployments
-    verbs: ["list", "watch"]
+- apiGroups: ["extensions", "apps"]
+  resources:
+  - daemonsets
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - endpoints
-    verbs: ["list", "watch"]
+- apiGroups: ["extensions", "apps"]
+  resources:
+  - deployments
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["autoscaling"]
-    resources:
-      - horizontalpodautoscalers
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - endpoints
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["extensions", "networking.k8s.io"]
-    resources:
-      - ingresses
-    verbs: ["list", "watch"]
+- apiGroups: ["autoscaling"]
+  resources:
+  - horizontalpodautoscalers
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["batch"]
-    resources:
-      - jobs
-    verbs: ["list", "watch"]
+- apiGroups: ["extensions", "networking.k8s.io"]
+  resources:
+  - ingresses
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - limitranges
-    verbs: ["list", "watch"]
+- apiGroups: ["batch"]
+  resources:
+  - jobs
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["admissionregistration.k8s.io"]
-    resources:
-      - mutatingwebhookconfigurations
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - limitranges
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - namespaces
-    verbs: ["list", "watch"]
+- apiGroups: ["admissionregistration.k8s.io"]
+  resources:
+    - mutatingwebhookconfigurations
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["networking.k8s.io"]
-    resources:
-      - networkpolicies
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - namespaces
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - nodes
-    verbs: ["list", "watch"]
+- apiGroups: ["networking.k8s.io"]
+  resources:
+  - networkpolicies
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - persistentvolumeclaims
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - nodes
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - persistentvolumes
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - persistentvolumeclaims
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["policy"]
-    resources:
-      - poddisruptionbudgets
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - persistentvolumes
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - pods
-    verbs: ["list", "watch"]
+- apiGroups: ["policy"]
+  resources:
+    - poddisruptionbudgets
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["extensions", "apps"]
-    resources:
-      - replicasets
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - pods
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - replicationcontrollers
-    verbs: ["list", "watch"]
+- apiGroups: ["extensions", "apps"]
+  resources:
+  - replicasets
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - resourcequotas
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - replicationcontrollers
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - secrets
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - resourcequotas
+  verbs: ["list", "watch"]
 
-  - apiGroups: [""]
-    resources:
-      - services
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - secrets
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["apps"]
-    resources:
-      - statefulsets
-    verbs: ["list", "watch"]
+- apiGroups: [""]
+  resources:
+  - services
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["storage.k8s.io"]
-    resources:
-      - storageclasses
-    verbs: ["list", "watch"]
+- apiGroups: ["apps"]
+  resources:
+  - statefulsets
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["admissionregistration.k8s.io"]
-    resources:
-      - validatingwebhookconfigurations
-    verbs: ["list", "watch"]
+- apiGroups: ["storage.k8s.io"]
+  resources:
+    - storageclasses
+  verbs: ["list", "watch"]
 
-  - apiGroups: ["storage.k8s.io"]
-    resources:
-      - volumeattachments
-    verbs: ["list", "watch"]
+- apiGroups: ["admissionregistration.k8s.io"]
+  resources:
+    - validatingwebhookconfigurations
+  verbs: ["list", "watch"]
+
+- apiGroups: ["storage.k8s.io"]
+  resources:
+    - volumeattachments
+  verbs: ["list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -550,7 +555,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  labels:
+  labels:    
     helm.sh/chart: kube-state-metrics-4.13.0
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: metrics
@@ -564,9 +569,9 @@ roleRef:
   kind: ClusterRole
   name: prometheus-kube-state-metrics
 subjects:
-  - kind: ServiceAccount
-    name: prometheus-kube-state-metrics
-    namespace: default
+- kind: ServiceAccount
+  name: prometheus-kube-state-metrics
+  namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -592,7 +597,7 @@ kind: Service
 metadata:
   name: prometheus-kube-state-metrics
   namespace: default
-  labels:
+  labels:    
     helm.sh/chart: kube-state-metrics-4.13.0
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: metrics
@@ -601,16 +606,16 @@ metadata:
     app.kubernetes.io/instance: prometheus
     app.kubernetes.io/version: "2.5.0"
   annotations:
-    prometheus.io/scrape: "true"
+    prometheus.io/scrape: 'true'
 spec:
   type: "ClusterIP"
   ports:
-    - name: "http"
-      protocol: TCP
-      port: 8080
-      targetPort: 8080
-
-  selector:
+  - name: "http"
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  
+  selector:    
     app.kubernetes.io/name: kube-state-metrics
     app.kubernetes.io/instance: prometheus
 ---
@@ -705,13 +710,14 @@ spec:
             - name: metrics
               containerPort: 9100
               hostPort: 9100
-          resources: {}
+          resources:
+            {}
           securityContext:
-            allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: false          
           volumeMounts:
             - name: proc
               mountPath: /host/proc
-              readOnly: true
+              readOnly:  true
             - name: sys
               mountPath: /host/sys
               readOnly: true
@@ -742,7 +748,7 @@ kind: Deployment
 metadata:
   name: prometheus-kube-state-metrics
   namespace: default
-  labels:
+  labels:    
     helm.sh/chart: kube-state-metrics-4.13.0
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: metrics
@@ -752,13 +758,13 @@ metadata:
     app.kubernetes.io/version: "2.5.0"
 spec:
   selector:
-    matchLabels:
+    matchLabels:      
       app.kubernetes.io/name: kube-state-metrics
       app.kubernetes.io/instance: prometheus
   replicas: 1
   template:
     metadata:
-      labels:
+      labels:        
         helm.sh/chart: kube-state-metrics-4.13.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/component: metrics
@@ -774,28 +780,28 @@ spec:
         runAsGroup: 65534
         runAsUser: 65534
       containers:
-        - name: kube-state-metrics
-          args:
-            - --port=8080
-            - --resources=certificatesigningrequests,configmaps,cronjobs,daemonsets,deployments,endpoints,horizontalpodautoscalers,ingresses,jobs,limitranges,mutatingwebhookconfigurations,namespaces,networkpolicies,nodes,persistentvolumeclaims,persistentvolumes,poddisruptionbudgets,pods,replicasets,replicationcontrollers,resourcequotas,secrets,services,statefulsets,storageclasses,validatingwebhookconfigurations,volumeattachments
-            - --telemetry-port=8081
-          imagePullPolicy: IfNotPresent
-          image: "registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.5.0"
-          ports:
-            - containerPort: 8080
-              name: "http"
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8080
-            initialDelaySeconds: 5
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8080
-            initialDelaySeconds: 5
-            timeoutSeconds: 5
+      - name: kube-state-metrics
+        args:
+        - --port=8080
+        - --resources=certificatesigningrequests,configmaps,cronjobs,daemonsets,deployments,endpoints,horizontalpodautoscalers,ingresses,jobs,limitranges,mutatingwebhookconfigurations,namespaces,networkpolicies,nodes,persistentvolumeclaims,persistentvolumes,poddisruptionbudgets,pods,replicasets,replicationcontrollers,resourcequotas,secrets,services,statefulsets,storageclasses,validatingwebhookconfigurations,volumeattachments
+        - --telemetry-port=8081
+        imagePullPolicy: IfNotPresent
+        image: "registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.5.0"
+        ports:
+        - containerPort: 8080
+          name: "http"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -830,11 +836,13 @@ spec:
         - name: prometheus-server-configmap-reload
           image: "jimmidyson/configmap-reload:v0.5.0"
           imagePullPolicy: "IfNotPresent"
-          securityContext: {}
+          securityContext:
+            {}
           args:
             - --volume-dir=/etc/config
             - --webhook-url=http://127.0.0.1:9090/-/reload
-          resources: {}
+          resources:
+            {}
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
@@ -872,7 +880,8 @@ spec:
             timeoutSeconds: 10
             failureThreshold: 3
             successThreshold: 1
-          resources: {}
+          resources:
+            {}
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
@@ -891,7 +900,8 @@ spec:
           configMap:
             name: prometheus-server
         - name: storage-volume
-          emptyDir: {}
+          emptyDir:
+            {}
 ---
 #                                      #
 #                                      #
@@ -903,56 +913,6 @@ spec:
 #                                      #
 #                                      #
 
-apiVersion: policy/v1beta1
-kind: PodSecurityPolicy
-metadata:
-  name: grafana-test
-  annotations:
-    "helm.sh/hook": test-success
-    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
-  labels:
-    helm.sh/chart: grafana-6.42.3
-    app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: grafana
-    app.kubernetes.io/version: "9.2.0"
-    app.kubernetes.io/managed-by: Helm
-spec:
-  allowPrivilegeEscalation: true
-  privileged: false
-  hostNetwork: false
-  hostIPC: false
-  hostPID: false
-  fsGroup:
-    rule: RunAsAny
-  seLinux:
-    rule: RunAsAny
-  supplementalGroups:
-    rule: RunAsAny
-  runAsUser:
-    rule: RunAsAny
-  volumes:
-    - configMap
-    - downwardAPI
-    - emptyDir
-    - projected
-    - csi
-    - secret
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  labels:
-    helm.sh/chart: grafana-6.42.3
-    app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: grafana
-    app.kubernetes.io/version: "9.2.0"
-    app.kubernetes.io/managed-by: Helm
-  name: grafana-test
-  namespace: default
-  annotations:
-    "helm.sh/hook": test-success
-    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -991,10 +951,10 @@ metadata:
     app.kubernetes.io/version: "9.2.0"
     app.kubernetes.io/managed-by: Helm
 rules:
-  - apiGroups: ["policy"]
-    resources: ["podsecuritypolicies"]
-    verbs: ["use"]
-    resourceNames: [grafana-test]
+- apiGroups:      ['policy']
+  resources:      ['podsecuritypolicies']
+  verbs:          ['use']
+  resourceNames:  [grafana-test]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -1015,9 +975,9 @@ roleRef:
   kind: Role
   name: grafana-test
 subjects:
-  - kind: ServiceAccount
-    name: grafana-test
-    namespace: default
+- kind: ServiceAccount
+  name: grafana-test
+  namespace: default
 ---
 apiVersion: v1
 kind: Pod
@@ -1045,58 +1005,11 @@ spec:
           name: tests
           readOnly: true
   volumes:
-    - name: tests
-      configMap:
-        name: grafana-test
+  - name: tests
+    configMap:
+      name: grafana-test
   restartPolicy: Never
 MANIFEST:
----
-apiVersion: policy/v1beta1
-kind: PodSecurityPolicy
-metadata:
-  name: grafana
-  labels:
-    helm.sh/chart: grafana-6.42.3
-    app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: grafana
-    app.kubernetes.io/version: "9.2.0"
-    app.kubernetes.io/managed-by: Helm
-  annotations:
-    seccomp.security.alpha.kubernetes.io/allowedProfileNames: "docker/default,runtime/default"
-    seccomp.security.alpha.kubernetes.io/defaultProfileName: "docker/default"
-    apparmor.security.beta.kubernetes.io/allowedProfileNames: "runtime/default"
-    apparmor.security.beta.kubernetes.io/defaultProfileName: "runtime/default"
-spec:
-  privileged: false
-  allowPrivilegeEscalation: false
-  requiredDropCapabilities:
-    - ALL
-  volumes:
-    - "configMap"
-    - "emptyDir"
-    - "projected"
-    - "csi"
-    - "secret"
-    - "downwardAPI"
-    - "persistentVolumeClaim"
-  hostNetwork: false
-  hostIPC: false
-  hostPID: false
-  runAsUser:
-    rule: "RunAsAny"
-  seLinux:
-    rule: "RunAsAny"
-  supplementalGroups:
-    rule: "MustRunAs"
-    ranges:
-      - min: 1
-        max: 65535
-  fsGroup:
-    rule: "MustRunAs"
-    ranges:
-      - min: 1
-        max: 65535
-  readOnlyRootFilesystem: false
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -1197,10 +1110,10 @@ metadata:
     app.kubernetes.io/version: "9.2.0"
     app.kubernetes.io/managed-by: Helm
 rules:
-  - apiGroups: ["extensions"]
-    resources: ["podsecuritypolicies"]
-    verbs: ["use"]
-    resourceNames: [grafana]
+- apiGroups:      ['extensions']
+  resources:      ['podsecuritypolicies']
+  verbs:          ['use']
+  resourceNames:  [grafana]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -1218,9 +1131,9 @@ roleRef:
   kind: Role
   name: grafana
 subjects:
-  - kind: ServiceAccount
-    name: grafana
-    namespace: default
+- kind: ServiceAccount
+  name: grafana
+  namespace: default
 ---
 apiVersion: v1
 kind: Service
@@ -1274,7 +1187,7 @@ spec:
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/secret: 15caba8a376b523cef17172a7980899691cf78da1b509babef4d6f289612feb3
-    spec:
+    spec:      
       serviceAccountName: grafana
       automountServiceAccountToken: true
       securityContext:
