@@ -42,8 +42,8 @@ pipeline {
             }
             steps{
                 withKubeConfig([credentialsId: 'kubeconfig']){
-                    sh 'sed -i "s/{{TAG}}/$tag_version/g" ./monitoramento/deploy-prometheus-grafana-yaml'
-                    sh 'kubectl apply -f ./monitoramento/deploy-prometheus-grafana-yaml'
+                    sh 'sed -i "s/{{TAG}}/$tag_version/g" ./monitoramento/deploy-prometheus-grafana.yaml'
+                    sh 'kubectl apply -f ./monitoramento/deploy-prometheus-grafana.yaml'
                 }
             }
         }
